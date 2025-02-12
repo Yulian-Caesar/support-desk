@@ -1,7 +1,6 @@
 import { useState } from "react"
 import { FaSignInAlt } from "react-icons/fa"
 import { LoginFormType } from "../types"
-import { toast } from 'react-toastify'
 import { Input } from "../components/Input"
 import { Button } from "../components/Button"
 
