@@ -3,6 +3,9 @@ import { FaSignInAlt } from "react-icons/fa"
 import { LoginFormType } from "../types"
 import { Input } from "../components/Input"
 import { Button } from "../components/Button"
+import { useSelector, useDispatch } from "react-redux"
+import { login } from "../features/auth/authSlice"
+import { RootState } from "../store"
 
 
 export const Login = () => {
@@ -11,6 +14,9 @@ export const Login = () => {
 		password: '',
 	})
 	const {email, password} = formData;
+
+	const dispatch = useDispatch()
+	const {user, isLoading, isSuccess, message} = useSelector((state: RootState) => state.auth)
 
 	const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setFormData((prevState) => ({
@@ -23,6 +29,12 @@ export const Login = () => {
 	const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		
+		const userData = {
+			email,
+			password
+		}
+
+		dispatch(login(userData))
 	}
 
 	return (

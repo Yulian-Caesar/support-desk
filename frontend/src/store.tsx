@@ -14,6 +14,8 @@ interface AppProviderProps {
 	children: ReactNode;
 }
 
+export type RootState = ReturnType<typeof store.getState>; 
+
 export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
 	return <Provider store={store}>{children}</Provider>;
 };

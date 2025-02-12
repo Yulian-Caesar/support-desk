@@ -4,6 +4,9 @@ import { RegisterFormConfirmType } from "../types"
 import {toast} from 'react-toastify'
 import { Input } from "../components/Input"
 import { Button } from "../components/Button"
+import { useSelector, useDispatch } from "react-redux"
+import { register } from "../features/auth/authSlice"
+import { RootState } from "../store"
 
 
 export const Register = () => {
@@ -14,6 +17,9 @@ export const Register = () => {
 		password2: ''
 	})
 	const {name, email, password, password2} = formData;
+
+	const dispatch = useDispatch()
+	const {user, isLoading, isSuccess, message} = useSelector((state: RootState) => state.auth)
 
 	const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setFormData((prevState) => ({
@@ -28,13 +34,23 @@ export const Register = () => {
 		
 		if(password !== password2) {
 			toast.error('Passwords do not match')
+		} else {
+			const userData = {
+				name,
+				email,
+				password
+			}
+
+			dispatch(register(userData))
 		}
 	}
 
 	return (
 		<>
 			<section className="heading">
-				<h1><FaUser /> Register</h1>
+				<h1>
+					<FaUser /> Register
+				</h1>
 				<p>Please create an account</p>
 			</section>
 
