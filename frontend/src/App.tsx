@@ -1,4 +1,6 @@
 import {BrowserRouter as Router, Routes, Route} from 'react-router'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import { Home as HomePage } from './pages/Home'
 import { Login as LoginPage } from './pages/Login'
 import { Register as RegisterPage } from './pages/Register'
@@ -17,6 +19,7 @@ function App() {
 				</Routes>
 			</div>
 		</Router>
+		<ToastContainer />
 	</>
 }
 
