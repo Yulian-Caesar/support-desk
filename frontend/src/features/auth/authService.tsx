@@ -4,7 +4,7 @@ const API_URL = 'http://localhost:5000/api/users'
 
 
 // Register user
-const register = async(userData) => {
+const register = async(userData: object) => {
 	const response = await axios.post(API_URL, userData)
 
 	if(response.data) {

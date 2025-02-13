@@ -1,10 +1,10 @@
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import authService from "./authService";
+import { AxiosError } from 'axios';
 
 // Get user from localstorage
-
-const user = JSON.parse(localStorage.getItem('user'));
+const user: object | null = JSON.parse(localStorage.getItem('user') || 'null');
 
 const initialState = {
 	user: user || null,
@@ -16,12 +16,17 @@ const initialState = {
 
 
 // Register new user
-export const register = createAsyncThunk('auth/register', async(user, thunkAPI) => {
+export const register = createAsyncThunk('auth/register', async(user: object, thunkAPI) => {
 	try {
 		return await authService.register(user)
-	} catch (error) {
-		const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-		return thunkAPI.rejectWithValue(message);
+	} catch (error: unknown) {
+		if (error instanceof AxiosError) {
+			const message: string = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+			return thunkAPI.rejectWithValue(message);
+		}
+
+		// If it's not an AxiosError, return a generic error message
+		return thunkAPI.rejectWithValue('An unexpected error occurred');
 	}
 })
 
