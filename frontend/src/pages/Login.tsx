@@ -23,7 +23,6 @@ export const Login = () => {
 			...prevState,
 			[e.target.name]: e.target.value
 		}))
-		console.log(e.target.value)
 	}
 
 	const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {

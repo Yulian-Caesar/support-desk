@@ -1,15 +1,19 @@
 const express = require('express')
 const colors = require('colors')
 const doteenv = require('dotenv').config()
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5173;
 const connectDB = require('./config/db')
 const {errorHandler} = require('./middleware/errorMiddleware')
+const cors = require('cors');
 
 // Connect to Database
 connectDB()
 
 
 const app = express();
+
+// Enable CORS for all domains
+app.use(cors());
 
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
