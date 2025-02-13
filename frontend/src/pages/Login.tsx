@@ -68,7 +68,7 @@ export const Login = () => {
 						/>
 					</div>
 					<div className="form-group">
-						<Button type="submit" className="btn-block" text="Submit" />
+						<Button type="submit" className="btn-block">Submit</Button>
 					</div>
 				</form>
 			</section>

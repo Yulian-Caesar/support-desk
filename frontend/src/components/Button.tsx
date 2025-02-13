@@ -1,13 +1,13 @@
 type ButtonProps = {
-	text: string;
 	type?: 'button' | 'submit' | 'reset';
 	className?: string;
+	children?: React.ReactNode;
 }
 
 export const Button: React.FC<ButtonProps> = (props) => {
 	const {
 		type = "button",
-		text,
+		children,
 		className = '',
 	} = props;
 
@@ -16,7 +16,7 @@ export const Button: React.FC<ButtonProps> = (props) => {
 			type={type}
 			className={`btn ${className}`}
 		>
-			{text}
+			{children}
 		</button>
 	)
 }
