@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from "react-redux"
 import { register, reset } from "../features/auth/authSlice"
 import { RootState } from "../store"
 import { useNavigate } from "react-router-dom"
+import { Spinner } from "../components/Spinner"
 
 
 export const Register = () => {
@@ -58,6 +59,8 @@ export const Register = () => {
 			dispatch(register(userData))
 		}
 	}
+
+	if(isLoading) return <Spinner />
 
 	return (
 		<>
