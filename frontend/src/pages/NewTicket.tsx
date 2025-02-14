@@ -11,7 +11,7 @@ import { BackButton } from "../components/BackButton"
 
 export const NewTicket = () => {
 	const {user} = useSelector((state: RootState) => state.auth)
-	const {isLoading, isError, isSuccess, message} = useSelector((state: RootState) => state.ticket)
+	const {isLoading, isError, isSuccess, message} = useSelector((state: RootState) => state.tickets)
 	const [name] = useState(user ? user.name : '')
 	const [email] = useState(user ? user.email : '')
 	const [product, setProduct] = useState('iPhone')

@@ -11,3 +11,26 @@ export type RegisterFormType = LoginFormType & {
 export type RegisterFormConfirmType = RegisterFormType & {
 	password2: string,
 }
+
+export type TicketsType = {
+	tickets: TicketType[];
+	ticket: TicketType | object,
+	isError: boolean,
+	isSuccess: boolean,
+	isLoading: boolean,
+	message: string,
+}
+
+export type TicketFormType = {
+	product: 'iPhone' | 'Macbook Pro' | 'iMac' | 'iPad',
+	description: string
+}
+
+export type TicketType = TicketFormType & {
+	_id: string,
+	user: string,
+	status: 'new' | 'open' | 'closed',
+	createdAt: string,
+	updatedAt: string,
+}
+

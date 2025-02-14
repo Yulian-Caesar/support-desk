@@ -7,6 +7,7 @@ import { Register as RegisterPage } from './pages/Register'
 import { NewTicket as  NewTicketPage} from './pages/NewTicket'
 import { Header } from './components/Header'
 import { PrivateRoute } from './components/PrivateRoute'
+import { Tickets as TicketsPage } from './pages/Tickets'
 
 
 function App() {
@@ -21,6 +22,9 @@ function App() {
 					<Route path='/register' element={<RegisterPage />} />
 					<Route path='/new-ticket' element={<PrivateRoute />}>
 						<Route path='/new-ticket' element={<NewTicketPage />} />
+					</Route>
+					<Route path='/tickets' element={<PrivateRoute />}>
+						<Route path='/tickets' element={<TicketsPage />} />
 					</Route>
 				</Routes>
 			</div>
