@@ -1,20 +1,43 @@
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "../store"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Input } from "../components/Input"
 import { Button } from "../components/Button"
+import { useNavigate } from "react-router-dom"
+import { createTicket, reset } from "../features/tickets/ticketSlice"
+import { toast } from "react-toastify"
+import { Spinner } from "../components/Spinner"
 
 export const NewTicket = () => {
 	const {user} = useSelector((state: RootState) => state.auth)
+	const {isLoading, isError, isSuccess, message} = useSelector((state: RootState) => state.ticket)
 	const [name] = useState(user ? user.name : '')
 	const [email] = useState(user ? user.email : '')
-
 	const [product, setProduct] = useState('iPhone')
 	const [description, setDescription] = useState('')
 
+	const dispatch = useDispatch()
+	const navigate = useNavigate()
+
+	useEffect(() => {
+		if(isError) {
+			toast.error(message)
+		}
+
+		if(isSuccess) {
+			dispatch(reset())
+			navigate('/tickets')
+		}
+
+		dispatch(reset())
+	}, [isError, message, dispatch, isSuccess, navigate])
+
 	const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+		dispatch(createTicket({product, description}))
 	}
+
+	if(isLoading) return <Spinner />
 
 	return (
 		<>
@@ -66,7 +89,7 @@ export const NewTicket = () => {
 						/>
 					</div>
 					<div className="form-group">
-						<Button className="btn-block">Submit</Button>
+						<Button type="submit" className="btn-block">Submit</Button>
 					</div>
 				</form>
 			</section>
