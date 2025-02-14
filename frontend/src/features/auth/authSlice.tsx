@@ -3,8 +3,13 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import authService from "./authService";
 import { AxiosError } from 'axios';
 
+type User = {
+	name: string;
+	email: string;
+}
+
 // Get user from localstorage
-const user: object | null = JSON.parse(localStorage.getItem('user') || 'null');
+const user: User | null = JSON.parse(localStorage.getItem('user') || 'null');
 
 const initialState = {
 	user: user || null,
@@ -16,7 +21,7 @@ const initialState = {
 
 
 // Register new user
-export const register = createAsyncThunk('auth/register', async(user: object, thunkAPI) => {
+export const register = createAsyncThunk('auth/register', async(user: User, thunkAPI) => {
 	try {
 		return await authService.register(user)
 	} catch (error: unknown) {
@@ -32,7 +37,7 @@ export const register = createAsyncThunk('auth/register', async(user: object, th
 
 
 // Login user
-export const login = createAsyncThunk('auth/login', async(user: object, thunkAPI) => {
+export const login = createAsyncThunk('auth/login', async(user: User, thunkAPI) => {
 	try {
 		return await authService.login(user)
 	} catch (error: unknown) {

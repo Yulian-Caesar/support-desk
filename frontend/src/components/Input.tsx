@@ -2,11 +2,12 @@ type InputProps = {
 	value: string;
 	id: string;
 	name: string;
-	onChange: React.ChangeEventHandler<HTMLInputElement>;
+	onChange?: React.ChangeEventHandler<HTMLInputElement>;
 	placeholder?: string;
 	type?: string;
 	className?: string;
 	required?: boolean;
+	disabled?: boolean;
 }
 
 export const Input: React.FC<InputProps> = (props) => {
@@ -18,7 +19,8 @@ export const Input: React.FC<InputProps> = (props) => {
 		placeholder, 
 		type = "text",
 		className = '',
-		required = false
+		required = false,
+		disabled = false
 	} = props;
 
 	return (
@@ -31,6 +33,7 @@ export const Input: React.FC<InputProps> = (props) => {
 			type={type}
 			className={`form-control ${className}`}
 			required={required}
+			disabled={disabled}
 		/>
 	)
 }
