@@ -60,6 +60,22 @@ export const getTicket = createAsyncThunk('tickets/get', async(ticketId: string,
 	}
 })
 
+// Close ticket
+export const closeTicket = createAsyncThunk('tickets/close', async(ticketId: string, thunkAPI) => {
+	try {
+		const token = thunkAPI.getState().auth.user.token
+		return await ticketService.closeTicket(ticketId, token)
+	} catch (error: unknown) {
+		if (error instanceof AxiosError) {
+			const message: string = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+			return thunkAPI.rejectWithValue(message);
+		}
+
+		// If it's not an AxiosError, return a generic error message
+		return thunkAPI.rejectWithValue('An unexpected error occurred');
+	}
+})
+
 export const ticketSlice = createSlice({
 	name: 'ticket',
 	initialState,
@@ -105,6 +121,10 @@ export const ticketSlice = createSlice({
 				state.isLoading = false;
 				state.isError = true;
 				state.message = action.payload
+			}) 
+			.addCase(closeTicket.fulfilled, (state, action) => {
+				state.isLoading = false;
+				state.tickets.map(ticket => ticket._id === action.payload._id ? (ticket.status = 'closed') : ticket)
 			}) 
 	}
 })
