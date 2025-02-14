@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom"
 import { createTicket, reset } from "../features/tickets/ticketSlice"
 import { toast } from "react-toastify"
 import { Spinner } from "../components/Spinner"
+import { BackButton } from "../components/BackButton"
 
 export const NewTicket = () => {
 	const {user} = useSelector((state: RootState) => state.auth)
@@ -41,6 +42,7 @@ export const NewTicket = () => {
 
 	return (
 		<>
+			<BackButton url="/" />
 			<section className="headign">
 				<h1>Create New Ticket</h1>
 				<p>Please fill out the form below</p>
