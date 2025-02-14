@@ -14,7 +14,7 @@ export type RegisterFormConfirmType = RegisterFormType & {
 
 export type TicketsType = {
 	tickets: TicketType[];
-	ticket: TicketType | object,
+	ticket: TicketType | null,
 	isError: boolean,
 	isSuccess: boolean,
 	isLoading: boolean,
