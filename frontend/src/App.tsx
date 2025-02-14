@@ -4,7 +4,10 @@ import 'react-toastify/dist/ReactToastify.css'
 import { Home as HomePage } from './pages/Home'
 import { Login as LoginPage } from './pages/Login'
 import { Register as RegisterPage } from './pages/Register'
+import { NewTicket as  NewTicketPage} from './pages/NewTicket'
 import { Header } from './components/Header'
+import { PrivateRoute } from './components/PrivateRoute'
+
 
 function App() {
 
@@ -16,6 +19,9 @@ function App() {
 					<Route path='/' element={<HomePage />} />
 					<Route path='/login' element={<LoginPage />} />
 					<Route path='/register' element={<RegisterPage />} />
+					<Route path='/new-ticket' element={<PrivateRoute />}>
+						<Route path='/new-ticket' element={<NewTicketPage />} />
+					</Route>
 				</Routes>
 			</div>
 		</Router>
