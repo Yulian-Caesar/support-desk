@@ -1,12 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from './features/auth/authSlice'
+import ticketReducer from './features/tickets/ticketSlice'
 import { Provider } from 'react-redux';
 import { ReactNode } from 'react';
 
 
 export const store = configureStore({
 	reducer: {
-		auth: authReducer
+		auth: authReducer,
+		ticket: ticketReducer
 	},
 });
 
