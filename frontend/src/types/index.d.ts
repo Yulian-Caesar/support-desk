@@ -34,3 +34,20 @@ export type TicketType = TicketFormType & {
 	updatedAt: string,
 }
 
+export type NotesType = {
+	notes: NoteType[];
+	isError: boolean,
+	isSuccess: boolean,
+	isLoading: boolean,
+	message: string,
+}
+
+export type NoteType = {
+	_id: string,
+	user: string,
+	ticket: string,
+	text: string,
+	isStaff: boolean,
+	createdAt: string,
+	updatedAt: string,
+}

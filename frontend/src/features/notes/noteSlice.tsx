@@ -1,8 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import noteService from './noteService'
 import { AxiosError } from 'axios'
+import { NotesType } from '../../types'
 
-const initialState = {
+const initialState: NotesType = {
 	notes: [],
 	isError: false,
 	isSuccess: false,
