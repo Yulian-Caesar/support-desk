@@ -326,6 +326,7 @@ h3 {
   right: 5px;
   font-size: 16px;
   cursor: pointer;
+  padding: 0;
 }
 
 .btn-close:hover {

@@ -1,22 +1,41 @@
 import { useDispatch, useSelector } from "react-redux"
+import {FaPlus} from 'react-icons/fa'
 import { RootState } from "../store"
 import { Spinner } from "../components/Spinner"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { getTicket, closeTicket } from "../features/tickets/ticketSlice"
-import { getNotes, reset as notesReset } from "../features/notes/noteSlice"
+import { getNotes, createNote, reset as notesReset } from "../features/notes/noteSlice"
 import { useNavigate, useParams } from "react-router-dom"
 import { toast } from "react-toastify"
 import { BackButton } from "../components/BackButton"
 import { Button } from "../components/Button"
 import { NoteItem } from "../components/NoteItem"
+import Modal from 'react-modal'
 
+const customStyles = {
+	content: {
+		width: '600px',
+		top: '50%',
+		left: '50%',
+		right: 'auto',
+		bottom: 'auto',
+		marginRight: '-50%',
+		transform: 'translate(-50%, -50%)',
+		position: 'relative',
+	},
+}
+
+Modal.setAppElement("#root")
 
 export const Ticket = () => {
-	const {ticket, isLoading, isSuccess, isError, message} = useSelector((state: RootState) => state.tickets)
-	const {notes, isLoading: notesIsLoading} = useSelector((state: RootState) => state.notes)
+	const [modalIsOpen, setModalIsOpen] = useState(false)
+	const [noteText, setNoteText] = useState('')
+
+	const { ticket, isLoading, isSuccess, isError, message } = useSelector((state: RootState) => state.tickets)
+	const { notes, isLoading: notesIsLoading } = useSelector((state: RootState) => state.notes)
 	const dispatch = useDispatch()
 	const navigate = useNavigate()
-	const {ticketId} = useParams()
+	const { ticketId } = useParams()
 
 	// Close ticket
 	const onTicketClose = () => {
@@ -25,8 +44,19 @@ export const Ticket = () => {
 		navigate('/tickets')
 	}
 
+	// Open/close modal
+	const openModal = () => setModalIsOpen(true)
+	const closeModal = () => setModalIsOpen(false)
+
+	// Create note submit
+	const onNoteSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault()
+		dispatch(createNote({noteText, ticketId}))
+		closeModal()
+	}
+
 	useEffect(() => {
-		if(isError) {
+		if (isError) {
 			toast.error(message)
 		}
 
@@ -34,8 +64,8 @@ export const Ticket = () => {
 		dispatch(getNotes(ticketId))
 	}, [ticketId, dispatch, isError, message])
 
-	if(isLoading || notesIsLoading) return <Spinner />
-	if(isError) return <h3>Something went wrong</h3>
+	if (isLoading || notesIsLoading) return <Spinner />
+	if (isError) return <h3>Something went wrong</h3>
 
 	return (
 		<div className="ticket-page">
@@ -56,6 +86,32 @@ export const Ticket = () => {
 				</div>
 				<h2>Notes</h2>
 			</header>
+
+			{ticket?.status !== 'closed' && (
+				<Button onClick={openModal}>
+					<FaPlus /> Add Note
+				</Button>
+			)}
+
+			<Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles} contentLabel='Add Note'>
+				<h2>Add Note</h2>
+				<Button className="btn-close" onClick={closeModal}>X</Button>
+				<form onSubmit={onNoteSubmit}>
+					<div className="form-group">
+						<textarea 
+							name="noteText"
+							id="noteText"
+							className="form-control"
+							placeholder="Note text"
+							value={noteText}
+							onChange={(e) => setNoteText(e.target.value)}
+						/>
+					</div>
+					<div className="form-group">
+						<Button type="submit">Submit</Button>
+					</div>
+				</form>
+			</Modal>
 
 			{notes.map((note) => (
 				<NoteItem key={note._id} note={note} />
